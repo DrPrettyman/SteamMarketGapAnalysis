@@ -1,0 +1,30 @@
+# Steam Market Intelligence Engine — Configuration
+# Copy this file to config.yaml and fill in your API keys.
+# NEVER commit config.yaml to version control.
+
+steam:
+  api_key: "YOUR_STEAM_API_KEY"          # https://steamcommunity.com/dev/apikey
+  seed_ids:                               # Starting Steam IDs for BFS crawl
+    - "76561198000000000"
+  max_users: 10000                        # Target number of public profiles
+  requests_per_second: 1.5               # Conservative rate limit
+
+steamspy:
+  requests_per_second: 4                  # SteamSpy max is ~4/sec
+  retry_attempts: 3
+  retry_backoff: 2.0                      # Exponential backoff multiplier
+
+rawg:
+  api_key: "YOUR_RAWG_API_KEY"           # https://rawg.io/apidocs
+  requests_per_second: 1                  # Free tier is conservative
+  retry_attempts: 3
+  retry_backoff: 2.0
+
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  sample_dir: "data/sample"
+
+collection:
+  checkpoint_interval: 100                # Save progress every N users/games
+  cache_ttl_hours: 168                    # Cache API responses for 7 days

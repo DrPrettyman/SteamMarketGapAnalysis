@@ -1,0 +1,30 @@
+# Steam Market Intelligence Engine — Dependencies
+# Install: pip install -r requirements.txt
+
+# Data manipulation
+pandas>=2.0
+numpy>=1.24
+
+# API clients
+requests>=2.31
+pyyaml>=6.0
+
+# Fuzzy string matching (RAWG title matching)
+thefuzz[speedup]>=0.20
+
+# Machine learning
+scikit-learn>=1.3
+scipy>=1.11
+implicit>=0.7                # ALS collaborative filtering for implicit feedback
+
+# Visualisation
+matplotlib>=3.7
+seaborn>=0.12
+plotly>=5.15
+
+# Notebook support
+jupyter>=1.0
+ipykernel>=6.25
+
+# Optional: Streamlit dashboard
+# streamlit>=1.28
