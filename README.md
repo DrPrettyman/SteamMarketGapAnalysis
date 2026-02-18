@@ -33,7 +33,10 @@ Python (pandas, numpy, scikit-learn, implicit, matplotlib, seaborn, plotly), Ste
 
 1. Clone the repository
 2. Install dependencies: `pip install -r requirements.txt` (or `conda env create -f environment.yml`)
-3. Copy `config.example.yaml` to `config.yaml` and add your API keys
+3. Copy `config.example.yaml` to `config.yaml` and add your API keys:
+   - **Steam Web API key:** Register at https://steamcommunity.com/dev/apikey (requires a Steam account)
+   - **RAWG API key:** Sign up at https://rawg.io/apidocs (free tier: 20,000 requests/month)
+   - SteamSpy requires no API key
 4. Run the data collection pipeline:
    ```bash
    python -m src.collect                  # all stages
