@@ -67,7 +67,9 @@ class SteamAPIClient:
             self._cache.set(url, data, params)
             return data
         except requests.RequestException as exc:
-            logger.warning("Steam API error for %s: %s", url, exc)
+            # Redact API key from logged URLs
+            safe_msg = str(exc).replace(self._key, "REDACTED")
+            logger.warning("Steam API error for %s: %s", url, safe_msg)
             return None
 
     # ------------------------------------------------------------------
@@ -138,6 +140,72 @@ class SteamAPIClient:
         return summary.get("communityvisibilitystate") == _PUBLIC_VISIBILITY
 
     # ------------------------------------------------------------------
+    # Seed discovery
+    # ------------------------------------------------------------------
+
+    def discover_seeds(
+        self,
+        group_names: list[str] | None = None,
+        members_per_group: int = 50,
+    ) -> list[str]:
+        """Discover public seed Steam IDs from popular community groups.
+
+        Fetches member lists from Steam community group XML endpoints and
+        filters to public profiles with visible friend lists.
+
+        Args:
+            group_names: Steam community group URL names.  Defaults to a set
+                of large, active groups.
+            members_per_group: How many members to pull per group.
+
+        Returns:
+            List of Steam IDs with confirmed public profiles.
+        """
+        if group_names is None:
+            group_names = [
+                "SteamClientBeta",
+                "tradingcards",
+                "steamreviews",
+                "SteamLabs",
+            ]
+
+        candidate_ids: list[str] = []
+        for group in group_names:
+            url = f"https://steamcommunity.com/groups/{group}/memberslistxml/?xml=1"
+            self._limiter.wait()
+            try:
+                resp = self._session.get(url, timeout=15)
+                resp.raise_for_status()
+                # Parse XML manually (avoid heavy lxml dependency)
+                import re
+                ids = re.findall(r"<steamID64>(\d+)</steamID64>", resp.text)
+                candidate_ids.extend(ids[:members_per_group])
+                logger.info("Group '%s': found %d member IDs", group, min(len(ids), members_per_group))
+            except requests.RequestException as exc:
+                logger.warning("Failed to fetch group '%s': %s", group, exc)
+
+        if not candidate_ids:
+            logger.warning("No candidates found from groups")
+            return []
+
+        # Deduplicate
+        candidate_ids = list(dict.fromkeys(candidate_ids))
+
+        # Filter to public profiles
+        public_seeds: list[str] = []
+        summaries = self.get_player_summaries(candidate_ids)
+        for s in summaries:
+            if self.is_public(s):
+                public_seeds.append(s["steamid"])
+
+        logger.info(
+            "Seed discovery: %d candidates → %d public profiles",
+            len(candidate_ids),
+            len(public_seeds),
+        )
+        return public_seeds
+
+    # ------------------------------------------------------------------
     # BFS crawler
     # ------------------------------------------------------------------
 
@@ -146,6 +214,7 @@ class SteamAPIClient:
         seed_ids: list[str],
         max_users: int = 10_000,
         checkpoint_path: str | Path = "data/raw/steam_crawl_checkpoint.json",
+        on_checkpoint: callable = None,
     ) -> dict:
         """BFS-crawl the friend graph collecting game ownership data.
 
@@ -153,6 +222,8 @@ class SteamAPIClient:
             seed_ids: Starting Steam IDs.
             max_users: Stop after collecting this many public profiles.
             checkpoint_path: Path for periodic progress saves.
+            on_checkpoint: Optional callback invoked at each checkpoint with
+                the current ``user_games`` list, e.g. for incremental CSV writes.
 
         Returns:
             Dictionary with keys ``users`` (list of user-game rows) and
@@ -185,6 +256,13 @@ class SteamAPIClient:
             if sid not in visited:
                 queue.append(sid)
 
+        logger.info(
+            "Crawl starting: %d seed IDs, %d in queue, %d already visited",
+            len(seed_ids),
+            len(queue),
+            len(visited),
+        )
+
         collected_users = len({row["steam_id"] for row in user_games})
         total_api_calls = 0
 
@@ -197,12 +275,22 @@ class SteamAPIClient:
             # Check if profile is public
             summaries = self.get_player_summaries([steam_id])
             total_api_calls += 1
-            if not summaries or not self.is_public(summaries[0]):
+            if not summaries:
+                logger.debug("No summary returned for %s (invalid ID?)", steam_id)
                 continue
+            if not self.is_public(summaries[0]):
+                persona = summaries[0].get("personaname", "unknown")
+                logger.debug("Skipping private profile: %s (%s)", steam_id, persona)
+                continue
+
+            persona = summaries[0].get("personaname", "unknown")
+            logger.info("Processing public profile: %s (%s)", steam_id, persona)
 
             # Collect owned games
             games = self.get_owned_games(steam_id)
             total_api_calls += 1
+            if not games:
+                logger.debug("No games visible for %s (game details may be hidden)", steam_id)
             if games:
                 for g in games:
                     user_games.append(
@@ -220,15 +308,20 @@ class SteamAPIClient:
             friends = self.get_friend_list(steam_id)
             total_api_calls += 1
             if friends:
-                for fid in friends:
-                    if fid not in visited:
-                        queue.append(fid)
+                new_friends = [fid for fid in friends if fid not in visited]
+                for fid in new_friends:
+                    queue.append(fid)
+                logger.info("Added %d new friends to queue (queue size: %d)", len(new_friends), len(queue))
+            else:
+                logger.debug("No friends visible for %s (friend list may be private)", steam_id)
 
             # Periodic checkpoint
             if collected_users % 100 == 0 and collected_users > 0:
                 self._save_checkpoint(
                     checkpoint_path, visited, queue, user_games
                 )
+                if on_checkpoint:
+                    on_checkpoint(user_games)
                 logger.info(
                     "Progress: %d users collected, %d visited, %d in queue, %d API calls",
                     collected_users,
@@ -239,6 +332,8 @@ class SteamAPIClient:
 
         # Final checkpoint
         self._save_checkpoint(checkpoint_path, visited, queue, user_games)
+        if on_checkpoint:
+            on_checkpoint(user_games)
         logger.info(
             "Crawl complete: %d users, %d game rows, %d total API calls",
             collected_users,

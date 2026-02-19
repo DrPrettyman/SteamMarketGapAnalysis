@@ -32,14 +32,33 @@ def stage_steam(cfg: dict) -> None:
         api_key=steam_cfg["api_key"],
         requests_per_second=steam_cfg.get("requests_per_second", 1.5),
     )
-    result = client.crawl(
-        seed_ids=steam_cfg["seed_ids"],
-        max_users=steam_cfg.get("max_users", 10_000),
-    )
 
-    # Save flattened user-games to CSV
+    seed_ids = steam_cfg["seed_ids"]
+
+    # Auto-discover seeds from Steam community groups if configured seeds
+    # are insufficient (e.g. new account with no friends)
+    if steam_cfg.get("auto_discover_seeds", True):
+        logger.info("Discovering seed profiles from Steam community groups...")
+        discovered = client.discover_seeds()
+        seed_ids = list(dict.fromkeys(seed_ids + discovered))  # dedup, preserve order
+        logger.info("Total seed IDs: %d (%d discovered)", len(seed_ids), len(discovered))
+
     out_path = Path(cfg["data"]["raw_dir"]) / "user_games.csv"
     out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    def on_checkpoint(user_games: list[dict]) -> None:
+        """Write CSV at each checkpoint so data is available incrementally."""
+        df = pd.DataFrame(user_games)
+        df.to_csv(out_path, index=False)
+        logger.info("CSV updated: %d rows → %s", len(df), out_path)
+
+    result = client.crawl(
+        seed_ids=seed_ids,
+        max_users=steam_cfg.get("max_users", 10_000),
+        on_checkpoint=on_checkpoint,
+    )
+
+    # Final CSV write
     df = pd.DataFrame(result["user_games"])
     df.to_csv(out_path, index=False)
     logger.info("Saved %d user-game rows to %s", len(df), out_path)

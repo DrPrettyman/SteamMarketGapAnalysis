@@ -89,9 +89,26 @@ class DiskCache:
 
 
 def setup_logging(level: int = logging.INFO) -> None:
-    """Configure project-wide logging."""
-    logging.basicConfig(
-        level=level,
-        format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
+    """Configure project-wide logging to both console and file."""
+    log_dir = PROJECT_ROOT / "logs"
+    log_dir.mkdir(exist_ok=True)
+
+    fmt = logging.Formatter(
+        "%(asctime)s [%(name)s] %(levelname)s: %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
     )
+
+    # Console handler
+    console = logging.StreamHandler()
+    console.setLevel(level)
+    console.setFormatter(fmt)
+
+    # File handler (append mode — survives restarts)
+    file_handler = logging.FileHandler(log_dir / "collect.log")
+    file_handler.setLevel(level)
+    file_handler.setFormatter(fmt)
+
+    root = logging.getLogger()
+    root.setLevel(level)
+    root.addHandler(console)
+    root.addHandler(file_handler)
