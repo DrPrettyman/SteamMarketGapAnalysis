@@ -28,8 +28,8 @@ class TestBuildGamesTable:
 
     def test_rawg_metadata_flag(self):
         result = build_games_table(self._steamspy(), self._rawg())
-        assert result.loc[result["app_id"] == 10, "has_rawg_metadata"].iloc[0] is True
-        assert result.loc[result["app_id"] == 30, "has_rawg_metadata"].iloc[0] is False
+        assert result.loc[result["app_id"] == 10, "has_rawg_metadata"].iloc[0] == True
+        assert result.loc[result["app_id"] == 30, "has_rawg_metadata"].iloc[0] == False
 
     def test_tags_normalised_to_lists(self):
         result = build_games_table(self._steamspy(), self._rawg())
