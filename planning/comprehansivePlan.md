@@ -391,3 +391,37 @@ This project generates natural discussion topics for data science interviews:
 - **Business sense:** Translating model output into actionable strategy, communicating uncertainty to non-technical stakeholders
 - **Data engineering:** Multi-source pipelines, API rate limiting, data quality tradeoffs, caching strategies
 - **Statistics:** Selection bias in friend-graph sampling, confidence intervals on SteamSpy estimates, multiple comparisons when ranking niches
+
+---
+
+## Phase 7: Portfolio Polish
+
+### Tests
+
+Create `tests/` directory at project root. All tests use synthetic data or sample files — no API calls.
+
+- [ ] Create tests/ directory with pytest config
+- [ ] `test_clean.py` — `clean_user_games()` and `clean_steamspy()`: dedup, type casting, outlier detection with small DataFrames containing known duplicates/outliers/missing values
+- [ ] `test_merge.py` — `build_games_table()`: feed 3 small DataFrames (steam, steamspy, rawg); assert join keys, column presence, NaN handling
+- [ ] `test_features.py` — `build_game_features()` and interaction matrix builder: assert output shape, genre/tag encoding correctness, sparse matrix format
+- [ ] `test_models.py` — `CollaborativeFilter`, `ContentBasedFilter`, `HybridRecommender`: fit on tiny synthetic interaction matrix; assert recommendations are valid app_ids, correct length, blending weights applied
+- [ ] `test_market_gaps.py` — `score_niches()`, `estimate_new_entrant_revenue()`: feed known niche data; assert score normalisation [0,1], revenue range ordering
+- [ ] `test_metrics.py` — `precision_at_k()`, `recall_at_k()`, `ndcg_at_k()`: textbook examples with known correct outputs; edge cases (empty lists, k > list length)
+
+Run: `pytest tests/ -v`
+
+### Dashboard & Deployment
+
+Enhance existing `src/visualisation/dashboard.py` and deploy.
+
+- [ ] Uncomment streamlit in requirements.txt
+- [ ] Add "Recommendation Demo" tab — pick a game, show top-N recommendations from pre-computed results
+- [ ] Add interactivity to Market Niches tab — filter by genre, tag, minimum revenue estimate; sortable table
+- [ ] Add dashboard screenshot to README with "How to Run" instructions
+- [ ] Deploy to Streamlit Community Cloud with live URL in README
+
+### Communication
+
+- [ ] Add architecture diagram (pipeline flow: APIs → cleaning → models → dashboard)
+- [ ] Add "Limitations" section to README (data coverage, selection bias, revenue estimate assumptions)
+- [ ] Draft blog post outline
