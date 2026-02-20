@@ -62,3 +62,19 @@ Python (pandas, numpy, scikit-learn, implicit, matplotlib, seaborn, plotly), Ste
    ```
 6. Explore the notebooks in order: `notebooks/01_*.ipynb` through `notebooks/05_*.ipynb`
 7. A small sample dataset is included in `data/sample/` for running notebooks without API keys
+
+### Interactive Dashboard
+
+```bash
+streamlit run src/visualisation/dashboard.py
+```
+
+Five tabs: Overview (collection metrics, revenue distribution), Market Niches (filterable opportunity table with genre/tag dropdowns, revenue estimates, interactive bubble chart), Recommender (model comparison, precision/recall/NDCG charts, revenue-weighted hit rate), Price Analysis, and Data Quality. Loads pre-computed results from `data/processed/` and `results/` — no API keys required.
+
+### Tests
+
+```bash
+pytest tests/ -v
+```
+
+82 tests covering data cleaning, three-source merging, feature engineering, recommender models (ALS collaborative filtering, content-based, hybrid), market gap scoring, and IR evaluation metrics (precision@K, NDCG@K, revenue-weighted hit rate). All tests use synthetic data — no API keys required.

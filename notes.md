@@ -163,6 +163,37 @@ Revenue estimates generated for top 15 niches with recency adjustments.
 - `revenue_range_comparison.png` — p25–p75 revenue bars for top 15 niches
 - `niche_metrics_heatmap.png` — normalised scorecard for top 20 niches
 
+## 2026-02-20: Phase 7 — Tests and dashboard enhancement
+
+### Test suite (82 tests)
+
+Created `tests/` directory with 6 test files covering all core modules:
+
+- `test_clean.py` (14 tests): deduplication, type casting, outlier flags, NaN handling for `clean_user_games()`, `clean_steamspy()`, `clean_rawg()`
+- `test_merge.py` (8 tests): three-source join correctness, RAWG metadata flag, tag/genre normalisation (dict→list, comma-separated→list)
+- `test_features.py` (13 tests): feature matrix shape, genre/tag binary encoding, interaction matrix sparsity, niche descriptor computation
+- `test_models.py` (12 tests): ALS collaborative filter, content-based filter, hybrid recommender — all on tiny synthetic interaction matrices
+- `test_market_gaps.py` (11 tests): niche scoring normalisation [0,1], revenue estimation ordering, recency trend computation
+- `test_metrics.py` (14 tests): textbook IR metrics (precision@K, recall@K, NDCG@K, revenue-weighted hit rate) with known correct outputs, edge cases (empty lists, k > list length)
+
+All tests use synthetic data only — no API keys or network calls.
+
+**Bug found and fixed during testing:** `np.True_ is True` evaluates to `False` in Python — numpy booleans are not Python singletons. Changed identity checks (`is True`) to equality checks (`== True`) in merge tests.
+
+### Dashboard enhancement
+
+Enhanced `src/visualisation/dashboard.py` from 4 tabs to 5:
+
+1. **Overview** — collection metrics, revenue distribution (unchanged)
+2. **Market Niches** — added genre and tag dropdown filters, minimum revenue slider, sortable opportunity table, interactive Plotly bubble chart
+3. **Recommender** (new tab) — model comparison bar chart (P@10, NDCG@10, Rev-HR@10), highlights CF vs popularity baseline improvement
+4. **Price Analysis** — switched from matplotlib to Plotly (unchanged logic)
+5. **Data Quality** — structured two-column layout with dataset overview and coverage notes
+
+Dashboard loads from pre-computed `data/processed/` and `results/` files — no model fitting at runtime.
+
+Also uncommented `streamlit>=1.28` in `requirements.txt` and added `pytest>=7.0`.
+
 ## Process note
 
 All data transformations must go through scripts in `src/`, not ad-hoc commands. If a one-off fix is needed (e.g. converting a checkpoint), it should be added to the relevant stage in `src/collect.py` so it's reproducible.
