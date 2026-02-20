@@ -108,13 +108,18 @@ def main() -> None:
     games_df = data["games"]
 
     # --- Sidebar filters ---
+    selected_genres = []
     st.sidebar.header("Filters")
     if "genres" in games_df.columns and not games_df.empty:
         all_genres = sorted(set(
             g for genres in games_df["genres"].dropna() for g in genres
             if isinstance(genres, list)
         ))
-        selected_genres = st.sidebar.multiselect("Filter by Genre", all_genres)
+        selected_genres = st.sidebar.multiselect(
+            "Filter by Genre/Tag",
+            all_genres,
+            help="Filters Overview (games) and Market Niches (niche names)",
+        )
         if selected_genres:
             games_df = games_df[
                 games_df["genres"].apply(
@@ -173,10 +178,30 @@ def main() -> None:
 
             # Apply filters to all niches if available
             display_niches = all_niche_df if not all_niche_df.empty else niche_df
-            if "# Games" in display_niches.columns:
-                display_niches = display_niches[display_niches["# Games"] >= min_games]
-            if "Median Revenue ($)" in display_niches.columns:
-                display_niches = display_niches[display_niches["Median Revenue ($)"] >= min_revenue]
+
+            # Handle both column naming conventions:
+            #   top_niches.csv uses "# Games", "Median Revenue ($)"
+            #   all_niches_scored.csv uses "supply", "median_revenue"
+            games_col = next(
+                (c for c in ["# Games", "supply"] if c in display_niches.columns),
+                None,
+            )
+            revenue_col = next(
+                (c for c in ["Median Revenue ($)", "median_revenue"] if c in display_niches.columns),
+                None,
+            )
+            if games_col:
+                display_niches = display_niches[display_niches[games_col] >= min_games]
+            if revenue_col:
+                display_niches = display_niches[display_niches[revenue_col] >= min_revenue]
+
+            # Apply genre/tag sidebar filter to niche names
+            if selected_genres and "niche" in display_niches.columns:
+                display_niches = display_niches[
+                    display_niches["niche"].apply(
+                        lambda n: any(g.lower() in n.lower() for g in selected_genres)
+                    )
+                ]
 
             st.dataframe(display_niches.head(25), use_container_width=True, hide_index=True)
 
