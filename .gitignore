@@ -42,6 +42,11 @@ env/
 .DS_Store
 Thumbs.db
 
+# Serialised models (too large for GitHub)
+*.pkl
+*.pickle
+*.joblib
+
 # Distribution
 *.tar.gz
 *.whl
