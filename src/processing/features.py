@@ -36,12 +36,15 @@ def build_game_features(games_df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     features["app_id"] = df["app_id"]
     metadata: dict = {}
 
+    parts = [features]  # collect DataFrames to concat at the end
+
     # --- Genre one-hot ---
     if "genres" in df.columns:
         mlb_genres = MultiLabelBinarizer()
-        genre_matrix = mlb_genres.fit_transform(df["genres"])
+        safe_genres = df["genres"].apply(lambda x: x if isinstance(x, list) else [])
+        genre_matrix = mlb_genres.fit_transform(safe_genres)
         genre_cols = [f"genre_{g}" for g in mlb_genres.classes_]
-        features[genre_cols] = genre_matrix
+        parts.append(pd.DataFrame(genre_matrix, columns=genre_cols, index=df.index))
         metadata["genre_classes"] = list(mlb_genres.classes_)
         logger.info("Genre features: %d classes", len(mlb_genres.classes_))
 
@@ -51,33 +54,42 @@ def build_game_features(games_df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
         tfidf = TfidfVectorizer(max_features=200)
         tag_matrix = tfidf.fit_transform(tag_strings)
         tag_cols = [f"tag_{t}" for t in tfidf.get_feature_names_out()]
-        features[tag_cols] = tag_matrix.toarray()
+        parts.append(pd.DataFrame(tag_matrix.toarray(), columns=tag_cols, index=df.index))
         metadata["tfidf_vocab_size"] = len(tfidf.get_feature_names_out())
         logger.info("Tag TF-IDF features: %d terms", len(tfidf.get_feature_names_out()))
 
     # --- Price bucket ---
     if "price_dollars" in df.columns:
-        features["price_bucket"] = pd.cut(
+        price_bucket = pd.cut(
             df["price_dollars"], bins=PRICE_BINS, labels=PRICE_LABELS, right=False
         )
-        price_dummies = pd.get_dummies(features["price_bucket"], prefix="price")
-        features = pd.concat([features.drop(columns=["price_bucket"]), price_dummies], axis=1)
+        price_dummies = pd.get_dummies(price_bucket, prefix="price")
+        price_dummies.index = df.index
+        parts.append(price_dummies)
 
     # --- Platform flags ---
     if "platforms" in df.columns:
         mlb_plat = MultiLabelBinarizer()
-        plat_matrix = mlb_plat.fit_transform(df["platforms"])
+        safe_plat = df["platforms"].apply(lambda x: x if isinstance(x, list) else [])
+        plat_matrix = mlb_plat.fit_transform(safe_plat)
         plat_cols = [f"platform_{p}" for p in mlb_plat.classes_]
-        features[plat_cols] = plat_matrix
+        parts.append(pd.DataFrame(plat_matrix, columns=plat_cols, index=df.index))
 
     # --- Metacritic (normalised) ---
     if "metacritic" in df.columns:
-        features["metacritic_norm"] = df["metacritic"].fillna(df["metacritic"].median()) / 100.0
+        parts.append(pd.DataFrame(
+            {"metacritic_norm": df["metacritic"].fillna(df["metacritic"].median()) / 100.0},
+            index=df.index,
+        ))
 
     # --- Review score ---
     if "review_score" in df.columns:
-        features["review_score"] = df["review_score"].fillna(df["review_score"].median())
+        parts.append(pd.DataFrame(
+            {"review_score": df["review_score"].fillna(df["review_score"].median())},
+            index=df.index,
+        ))
 
+    features = pd.concat(parts, axis=1)
     logger.info("Game feature matrix: %d games × %d features", *features.shape)
     return features, metadata
 

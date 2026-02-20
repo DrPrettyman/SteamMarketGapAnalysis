@@ -39,9 +39,12 @@ def compute_price_segments(games_df: pd.DataFrame) -> pd.DataFrame:
     df["price_bin"] = pd.cut(df["price_dollars"], bins=PRICE_BINS, labels=PRICE_LABELS, right=False)
 
     # Explode genres so each game appears once per genre it belongs to
+    # Drop the original SteamSpy "genre" (comma-separated string) to avoid conflict
     if "genres" in df.columns:
+        if "genre" in df.columns:
+            df = df.drop(columns=["genre"])
         df = df.explode("genres").rename(columns={"genres": "genre"})
-    else:
+    elif "genre" not in df.columns:
         df["genre"] = "Unknown"
 
     df = df.dropna(subset=["genre", "price_bin"])
@@ -154,6 +157,8 @@ def compute_genre_elasticities(games_df: pd.DataFrame, min_games: int = 30) -> p
     if "genres" not in df.columns:
         return pd.DataFrame()
 
+    if "genre" in df.columns:
+        df = df.drop(columns=["genre"])
     df = df.explode("genres").rename(columns={"genres": "genre"})
     df = df.dropna(subset=["genre", "price_dollars", "owners_mid", "review_score"])
     df = df[df["owners_mid"] > 0]

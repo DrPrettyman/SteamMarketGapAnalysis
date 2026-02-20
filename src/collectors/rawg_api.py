@@ -68,11 +68,12 @@ class RAWGClient:
                 self._cache.set(url, data, params)
                 return data
             except requests.RequestException as exc:
+                safe_msg = str(exc).replace(self._key, "REDACTED")
                 logger.warning(
                     "RAWG request failed (attempt %d/%d): %s",
                     attempt,
                     self._retry_attempts,
-                    exc,
+                    safe_msg,
                 )
                 if attempt < self._retry_attempts:
                     time.sleep(self._retry_backoff**attempt)

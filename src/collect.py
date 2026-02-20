@@ -142,10 +142,35 @@ def stage_clean(cfg: dict) -> None:
     spy_df = clean_steamspy(spy_df)
 
     # --- RAWG ---
-    with open(raw_dir / "rawg_metadata.json") as f:
-        rawg_data = json.load(f)
-    rawg_df = pd.DataFrame(rawg_data["matched"])
-    rawg_df = clean_rawg(rawg_df)
+    rawg_path = raw_dir / "rawg_metadata.json"
+    rawg_checkpoint = raw_dir / "rawg_metadata_checkpoint.json"
+
+    if rawg_path.exists():
+        with open(rawg_path) as f:
+            rawg_data = json.load(f)
+    elif rawg_checkpoint.exists():
+        # Fall back to checkpoint if the RAWG stage was interrupted
+        logger.info("rawg_metadata.json not found; loading from checkpoint")
+        with open(rawg_checkpoint) as f:
+            ckpt = json.load(f)
+        rawg_data = {
+            "matched": list(ckpt.get("matched", {}).values()),
+            "unmatched": [{"app_id": aid} for aid in ckpt.get("unmatched_ids", [])],
+        }
+        # Write the converted file so future runs don't need the checkpoint
+        with open(rawg_path, "w") as f:
+            json.dump(rawg_data, f)
+        logger.info(
+            "Converted checkpoint → rawg_metadata.json (%d matched)",
+            len(rawg_data["matched"]),
+        )
+    else:
+        logger.warning("No RAWG data found; proceeding without metadata")
+        rawg_data = {"matched": [], "unmatched": []}
+
+    rawg_df = pd.DataFrame(rawg_data["matched"]) if rawg_data["matched"] else pd.DataFrame()
+    if not rawg_df.empty:
+        rawg_df = clean_rawg(rawg_df)
 
     # --- Merge ---
     games_df = build_games_table(spy_df, rawg_df)
@@ -156,7 +181,7 @@ def stage_clean(cfg: dict) -> None:
     enriched_ug.to_csv(processed_dir / "user_games.csv", index=False)
 
     # Save list columns as JSON (CSV can't handle lists)
-    games_df.to_json(processed_dir / "games.json", orient="records", lines=True)
+    games_df.to_json(processed_dir / "games.json", orient="records", lines=True, date_format="iso")
 
     # --- Data quality report ---
     report = generate_data_quality_report(enriched_ug, games_df)

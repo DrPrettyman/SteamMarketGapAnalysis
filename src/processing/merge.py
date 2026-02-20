@@ -36,6 +36,9 @@ def build_games_table(
     merged = steamspy_df.merge(rawg_df, on="app_id", how="left", suffixes=("", "_rawg"))
     merged["has_rawg_metadata"] = merged["rawg_id"].notna()
 
+    # Normalise tags and genres into clean lists for downstream use
+    merged = _normalise_tags_and_genres(merged)
+
     match_rate = merged["has_rawg_metadata"].mean()
     logger.info(
         "Games table: %d rows, %.1f%% with RAWG metadata",
@@ -44,6 +47,73 @@ def build_games_table(
     )
 
     return merged
+
+
+def _normalise_tags_and_genres(df: pd.DataFrame) -> pd.DataFrame:
+    """Unify tag and genre columns into clean string lists.
+
+    SteamSpy provides:
+        - ``tags``: dict {tag_name: vote_count} (40K+ games)
+        - ``genre``: comma-separated string (49K+ games)
+
+    RAWG provides:
+        - ``tags_rawg``: list of strings (10K games)
+        - ``genres``: list of strings (10K games)
+
+    Strategy: use SteamSpy as primary (better coverage), RAWG as fallback.
+    Output columns ``tags`` and ``genres`` are always list[str].
+    """
+    # --- Tags: SteamSpy dict → sorted list (by vote count desc) ---
+    def _tags_to_list(val):
+        if isinstance(val, dict):
+            return [k for k, _ in sorted(val.items(), key=lambda x: -x[1])]
+        if isinstance(val, list):
+            return val
+        return []
+
+    if "tags" in df.columns:
+        df["tags"] = df["tags"].apply(_tags_to_list)
+    else:
+        df["tags"] = [[] for _ in range(len(df))]
+
+    # Fill empty SteamSpy tags with RAWG tags where available
+    if "tags_rawg" in df.columns:
+        mask = df["tags"].apply(len) == 0
+        df.loc[mask, "tags"] = df.loc[mask, "tags_rawg"].apply(
+            lambda x: x if isinstance(x, list) else []
+        )
+
+    # --- Genres: SteamSpy string → list, RAWG list as fallback ---
+    def _genre_to_list(val):
+        if isinstance(val, list):
+            return val
+        if isinstance(val, str) and val:
+            return [g.strip() for g in val.split(",")]
+        return []
+
+    # SteamSpy genre is a string in column "genre"; RAWG genres is a list in "genres"
+    if "genre" in df.columns:
+        spy_genres = df["genre"].apply(_genre_to_list)
+    else:
+        spy_genres = pd.Series([[] for _ in range(len(df))], index=df.index)
+
+    if "genres" in df.columns:
+        rawg_genres = df["genres"].apply(lambda x: x if isinstance(x, list) else [])
+    else:
+        rawg_genres = pd.Series([[] for _ in range(len(df))], index=df.index)
+
+    # Prefer SteamSpy (more coverage), fall back to RAWG
+    df["genres"] = spy_genres.where(spy_genres.apply(len) > 0, rawg_genres)
+
+    has_tags = (df["tags"].apply(len) > 0).sum()
+    has_genres = (df["genres"].apply(len) > 0).sum()
+    logger.info(
+        "Normalised tags: %d games with tags, %d with genres",
+        has_tags,
+        has_genres,
+    )
+
+    return df
 
 
 def build_user_games_table(
