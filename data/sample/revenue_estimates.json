@@ -1,0 +1,287 @@
+[
+  {
+    "niche": "Multiplayer + Open World",
+    "num_existing_games": 690,
+    "total_estimated_players": 1470195000,
+    "median_engagement_min": 262.0,
+    "median_satisfaction": 0.71413363075,
+    "revenue_low": 0.0,
+    "revenue_mid": 1498874.81,
+    "revenue_high": 20998250.88,
+    "avg_price": 13.49,
+    "recency_multiplier": 2.0005002501250626,
+    "assumptions": [
+      "Revenue estimated from SteamSpy owner midpoints \u00d7 current price",
+      "Owner estimates carry \u00b120-30% uncertainty for smaller titles",
+      "Price reflects current listing, not historical sale prices",
+      "Recency adjustment: 2.00x",
+      "A new entrant is assumed to achieve between the 25th and 75th percentile of existing titles"
+    ]
+  },
+  {
+    "niche": "Multiplayer + Tactical + e-sports",
+    "num_existing_games": 6,
+    "total_estimated_players": 201660000,
+    "median_engagement_min": 1469.0,
+    "median_satisfaction": 0.8471851365,
+    "revenue_low": 0.0,
+    "revenue_mid": 0.0,
+    "revenue_high": 0.0,
+    "avg_price": 6.66,
+    "recency_multiplier": 0.0,
+    "assumptions": [
+      "Revenue estimated from SteamSpy owner midpoints \u00d7 current price",
+      "Owner estimates carry \u00b120-30% uncertainty for smaller titles",
+      "Price reflects current listing, not historical sale prices",
+      "Recency adjustment: 0.00x",
+      "A new entrant is assumed to achieve between the 25th and 75th percentile of existing titles"
+    ]
+  },
+  {
+    "niche": "Action + Multiplayer",
+    "num_existing_games": 2526,
+    "total_estimated_players": 3304490000,
+    "median_engagement_min": 131.0,
+    "median_satisfaction": 0.75347748115,
+    "revenue_low": 0.0,
+    "revenue_mid": 749500.0,
+    "revenue_high": 14992500.0,
+    "avg_price": 9.67,
+    "recency_multiplier": 5.0,
+    "assumptions": [
+      "Revenue estimated from SteamSpy owner midpoints \u00d7 current price",
+      "Owner estimates carry \u00b120-30% uncertainty for smaller titles",
+      "Price reflects current listing, not historical sale prices",
+      "Recency adjustment: 5.00x",
+      "A new entrant is assumed to achieve between the 25th and 75th percentile of existing titles"
+    ]
+  },
+  {
+    "niche": "Action + Tactical + e-sports",
+    "num_existing_games": 6,
+    "total_estimated_players": 200170000,
+    "median_engagement_min": 1317.5,
+    "median_satisfaction": 0.8552655678000001,
+    "revenue_low": 0.0,
+    "revenue_mid": 0.0,
+    "revenue_high": 0.0,
+    "avg_price": 7.91,
+    "recency_multiplier": 0.0,
+    "assumptions": [
+      "Revenue estimated from SteamSpy owner midpoints \u00d7 current price",
+      "Owner estimates carry \u00b120-30% uncertainty for smaller titles",
+      "Price reflects current listing, not historical sale prices",
+      "Recency adjustment: 0.00x",
+      "A new entrant is assumed to achieve between the 25th and 75th percentile of existing titles"
+    ]
+  },
+  {
+    "niche": "PvP + Tactical + e-sports",
+    "num_existing_games": 6,
+    "total_estimated_players": 200170000,
+    "median_engagement_min": 1317.5,
+    "median_satisfaction": 0.8471851365,
+    "revenue_low": 24975.0,
+    "revenue_mid": 109900.0,
+    "revenue_high": 112417475.0,
+    "avg_price": 8.66,
+    "recency_multiplier": 1.0,
+    "assumptions": [
+      "Revenue estimated from SteamSpy owner midpoints \u00d7 current price",
+      "Owner estimates carry \u00b120-30% uncertainty for smaller titles",
+      "Price reflects current listing, not historical sale prices",
+      "Recency adjustment: 1.00x",
+      "A new entrant is assumed to achieve between the 25th and 75th percentile of existing titles"
+    ]
+  },
+  {
+    "niche": "Co-op + Multiplayer",
+    "num_existing_games": 1179,
+    "total_estimated_players": 1735295000,
+    "median_engagement_min": 189.0,
+    "median_satisfaction": 0.7898700805500001,
+    "revenue_low": 0.0,
+    "revenue_mid": 280040.75,
+    "revenue_high": 5600815.09,
+    "avg_price": 12.18,
+    "recency_multiplier": 0.7482718894009217,
+    "assumptions": [
+      "Revenue estimated from SteamSpy owner midpoints \u00d7 current price",
+      "Owner estimates carry \u00b120-30% uncertainty for smaller titles",
+      "Price reflects current listing, not historical sale prices",
+      "Recency adjustment: 0.75x",
+      "A new entrant is assumed to achieve between the 25th and 75th percentile of existing titles"
+    ]
+  },
+  {
+    "niche": "Tactical + e-sports",
+    "num_existing_games": 10,
+    "total_estimated_players": 201700000,
+    "median_engagement_min": 1237.0,
+    "median_satisfaction": 0.8087742053,
+    "revenue_low": 0.0,
+    "revenue_mid": 0.0,
+    "revenue_high": 0.0,
+    "avg_price": 7.94,
+    "recency_multiplier": 0.0,
+    "assumptions": [
+      "Revenue estimated from SteamSpy owner midpoints \u00d7 current price",
+      "Owner estimates carry \u00b120-30% uncertainty for smaller titles",
+      "Price reflects current listing, not historical sale prices",
+      "Recency adjustment: 0.00x",
+      "A new entrant is assumed to achieve between the 25th and 75th percentile of existing titles"
+    ]
+  },
+  {
+    "niche": "Multiplayer + Online Co-Op",
+    "num_existing_games": 729,
+    "total_estimated_players": 1343395000,
+    "median_engagement_min": 203.0,
+    "median_satisfaction": 0.79963321175,
+    "revenue_low": 21385.71,
+    "revenue_mid": 171385.71,
+    "revenue_high": 2471785.71,
+    "avg_price": 12.29,
+    "recency_multiplier": 0.42857142857142855,
+    "assumptions": [
+      "Revenue estimated from SteamSpy owner midpoints \u00d7 current price",
+      "Owner estimates carry \u00b120-30% uncertainty for smaller titles",
+      "Price reflects current listing, not historical sale prices",
+      "Recency adjustment: 0.43x",
+      "A new entrant is assumed to achieve between the 25th and 75th percentile of existing titles"
+    ]
+  },
+  {
+    "niche": "Multiplayer + Shooter",
+    "num_existing_games": 789,
+    "total_estimated_players": 2083150000,
+    "median_engagement_min": 130.0,
+    "median_satisfaction": 0.7528448557,
+    "revenue_low": 0.0,
+    "revenue_mid": 776296.8,
+    "revenue_high": 21786018.24,
+    "avg_price": 9.44,
+    "recency_multiplier": 3.883425710709816,
+    "assumptions": [
+      "Revenue estimated from SteamSpy owner midpoints \u00d7 current price",
+      "Owner estimates carry \u00b120-30% uncertainty for smaller titles",
+      "Price reflects current listing, not historical sale prices",
+      "Recency adjustment: 3.88x",
+      "A new entrant is assumed to achieve between the 25th and 75th percentile of existing titles"
+    ]
+  },
+  {
+    "niche": "Adventure + Open World",
+    "num_existing_games": 978,
+    "total_estimated_players": 1184990000,
+    "median_engagement_min": 228.0,
+    "median_satisfaction": 0.7485137901000001,
+    "revenue_low": 216573.33,
+    "revenue_mid": 2040747.89,
+    "revenue_high": 20222261.32,
+    "avg_price": 14.41,
+    "recency_multiplier": 2.91681253646745,
+    "assumptions": [
+      "Revenue estimated from SteamSpy owner midpoints \u00d7 current price",
+      "Owner estimates carry \u00b120-30% uncertainty for smaller titles",
+      "Price reflects current listing, not historical sale prices",
+      "Recency adjustment: 2.92x",
+      "A new entrant is assumed to achieve between the 25th and 75th percentile of existing titles"
+    ]
+  },
+  {
+    "niche": "Action + Multiplayer + Shooter",
+    "num_existing_games": 721,
+    "total_estimated_players": 1871860000,
+    "median_engagement_min": 130.0,
+    "median_satisfaction": 0.7524989741000001,
+    "revenue_low": 0.0,
+    "revenue_mid": 776296.8,
+    "revenue_high": 23294729.13,
+    "avg_price": 9.32,
+    "recency_multiplier": 3.883425710709816,
+    "assumptions": [
+      "Revenue estimated from SteamSpy owner midpoints \u00d7 current price",
+      "Owner estimates carry \u00b120-30% uncertainty for smaller titles",
+      "Price reflects current listing, not historical sale prices",
+      "Recency adjustment: 3.88x",
+      "A new entrant is assumed to achieve between the 25th and 75th percentile of existing titles"
+    ]
+  },
+  {
+    "niche": "First-Person + Multiplayer",
+    "num_existing_games": 674,
+    "total_estimated_players": 1631245000,
+    "median_engagement_min": 141.5,
+    "median_satisfaction": 0.7729257642,
+    "revenue_low": 0.0,
+    "revenue_mid": 615786.65,
+    "revenue_high": 9525954.98,
+    "avg_price": 10.23,
+    "recency_multiplier": 1.3615314769975786,
+    "assumptions": [
+      "Revenue estimated from SteamSpy owner midpoints \u00d7 current price",
+      "Owner estimates carry \u00b120-30% uncertainty for smaller titles",
+      "Price reflects current listing, not historical sale prices",
+      "Recency adjustment: 1.36x",
+      "A new entrant is assumed to achieve between the 25th and 75th percentile of existing titles"
+    ]
+  },
+  {
+    "niche": "Multiplayer + Singleplayer",
+    "num_existing_games": 1522,
+    "total_estimated_players": 1255240000,
+    "median_engagement_min": 192.0,
+    "median_satisfaction": 0.7895561120000001,
+    "revenue_low": 53843.94,
+    "revenue_mid": 1259930.28,
+    "revenue_high": 10096414.79,
+    "avg_price": 13.81,
+    "recency_multiplier": 1.8008008008008005,
+    "assumptions": [
+      "Revenue estimated from SteamSpy owner midpoints \u00d7 current price",
+      "Owner estimates carry \u00b120-30% uncertainty for smaller titles",
+      "Price reflects current listing, not historical sale prices",
+      "Recency adjustment: 1.80x",
+      "A new entrant is assumed to achieve between the 25th and 75th percentile of existing titles"
+    ]
+  },
+  {
+    "niche": "FPS + Multiplayer",
+    "num_existing_games": 668,
+    "total_estimated_players": 1742265000,
+    "median_engagement_min": 128.0,
+    "median_satisfaction": 0.7387130048,
+    "revenue_low": 0.0,
+    "revenue_mid": 92544.78,
+    "revenue_high": 3464641.29,
+    "avg_price": 8.56,
+    "recency_multiplier": 0.617376775271512,
+    "assumptions": [
+      "Revenue estimated from SteamSpy owner midpoints \u00d7 current price",
+      "Owner estimates carry \u00b120-30% uncertainty for smaller titles",
+      "Price reflects current listing, not historical sale prices",
+      "Recency adjustment: 0.62x",
+      "A new entrant is assumed to achieve between the 25th and 75th percentile of existing titles"
+    ]
+  },
+  {
+    "niche": "Open World + Singleplayer",
+    "num_existing_games": 739,
+    "total_estimated_players": 772210000,
+    "median_engagement_min": 273.0,
+    "median_satisfaction": 0.7853672004000001,
+    "revenue_low": 311118.55,
+    "revenue_mid": 3499500.0,
+    "revenue_high": 23333890.93,
+    "avg_price": 17.59,
+    "recency_multiplier": 1.5563709139426285,
+    "assumptions": [
+      "Revenue estimated from SteamSpy owner midpoints \u00d7 current price",
+      "Owner estimates carry \u00b120-30% uncertainty for smaller titles",
+      "Price reflects current listing, not historical sale prices",
+      "Recency adjustment: 1.56x",
+      "A new entrant is assumed to achieve between the 25th and 75th percentile of existing titles"
+    ]
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "users_total": 10000,
+  "games_total": 50005,
+  "median_games_per_user": 194,
+  "mean_games_per_user": 862.5,
+  "playtime_median_hrs": 2.2,
+  "playtime_mean_hrs": 43.8,
+  "playtime_zero_pct": 0.539,
+  "rawg_match_rate": 0.199,
+  "interaction_rows": 8625136,
+  "playtime_outlier_threshold_hrs": 2565,
+  "playtime_outlier_count": 8626,
+  "games_missing": {
+    "price": 0.062,
+    "tags": 0.183,
+    "genres": 0.078,
+    "metacritic": 0.941,
+    "rawg_id": 0.801,
+    "average_playtime": 0.0,
+    "owners_estimate": 0.0
+  }
+}

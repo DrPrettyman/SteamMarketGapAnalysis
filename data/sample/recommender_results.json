@@ -1,0 +1,88 @@
+{
+  "popularity_baseline": {
+    "precision@5": 0.0139,
+    "recall@5": 0.0693,
+    "ndcg@5": 0.0546,
+    "revenue_weighted_hr@5": 0.0279,
+    "precision@10": 0.0089,
+    "recall@10": 0.0887,
+    "ndcg@10": 0.0608,
+    "revenue_weighted_hr@10": 0.0423,
+    "precision@20": 0.0051,
+    "recall@20": 0.1011,
+    "ndcg@20": 0.0641,
+    "revenue_weighted_hr@20": 0.0483
+  },
+  "collaborative_filtering": {
+    "precision@5": 0.0253,
+    "recall@5": 0.1265,
+    "ndcg@5": 0.0923,
+    "revenue_weighted_hr@5": 0.0711,
+    "precision@10": 0.0175,
+    "recall@10": 0.1751,
+    "ndcg@10": 0.108,
+    "revenue_weighted_hr@10": 0.1025,
+    "precision@20": 0.0121,
+    "recall@20": 0.2421,
+    "ndcg@20": 0.1249,
+    "revenue_weighted_hr@20": 0.1484
+  },
+  "content_based_sample": {
+    "precision@10": 0.0017,
+    "ndcg@10": 0.0112
+  },
+  "hybrid_all": {
+    "precision@5": 0.0226,
+    "recall@5": 0.1131,
+    "ndcg@5": 0.0854,
+    "revenue_weighted_hr@5": 0.0627,
+    "precision@10": 0.0152,
+    "recall@10": 0.1516,
+    "ndcg@10": 0.0978,
+    "revenue_weighted_hr@10": 0.0885,
+    "precision@20": 0.0108,
+    "recall@20": 0.2163,
+    "ndcg@20": 0.114,
+    "revenue_weighted_hr@20": 0.1315
+  },
+  "hybrid_warm": {
+    "precision@5": 0.0249,
+    "recall@5": 0.1245,
+    "ndcg@5": 0.094,
+    "revenue_weighted_hr@5": 0.069,
+    "precision@10": 0.0167,
+    "recall@10": 0.1668,
+    "ndcg@10": 0.1076,
+    "revenue_weighted_hr@10": 0.0974,
+    "precision@20": 0.0119,
+    "recall@20": 0.2381,
+    "ndcg@20": 0.1255,
+    "revenue_weighted_hr@20": 0.1447
+  },
+  "hybrid_cold": {
+    "precision@5": 0.0,
+    "recall@5": 0.0,
+    "ndcg@5": 0.0,
+    "revenue_weighted_hr@5": 0.0,
+    "precision@10": 0.0,
+    "recall@10": 0.0,
+    "ndcg@10": 0.0,
+    "revenue_weighted_hr@10": 0.0,
+    "precision@20": 0.0,
+    "recall@20": 0.0,
+    "ndcg@20": 0.0,
+    "revenue_weighted_hr@20": 0.0
+  },
+  "metadata": {
+    "n_users": 8641,
+    "n_items": 47104,
+    "n_interactions": 3973488,
+    "n_test_users": 8505,
+    "n_warm_test": 7729,
+    "n_cold_test": 776,
+    "als_factors": 64,
+    "als_iterations": 15,
+    "feature_dims": 294,
+    "training_time_seconds": 2.3
+  }
+}

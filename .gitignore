@@ -16,6 +16,9 @@ data/raw/cache/
 data/processed/*.json
 data/processed/*.csv
 
+# Sample data IS tracked (used by dashboard on Streamlit Cloud)
+!data/sample/
+
 # Python
 __pycache__/
 *.py[cod]
