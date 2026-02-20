@@ -6,13 +6,15 @@ config.yaml
 logs/
 
 # Raw data (too large for git; instructions to reproduce in README)
-data/raw/
+data/raw/*.json
+data/raw/*.csv
 
 # Cache directories
 data/raw/cache/
 
 # Processed data (reproducible from raw)
-data/processed/
+data/processed/*.json
+data/processed/*.csv
 
 # Python
 __pycache__/
