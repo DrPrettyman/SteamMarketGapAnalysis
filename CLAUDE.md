@@ -88,6 +88,16 @@ logs/                        # collect.log (gitignored)
 4. **Clean stage** → `data/processed/games.csv`, `data/processed/user_games.csv`, `data/processed/data_quality_report.json`
 5. **Notebooks 02-04** → `results/tables/` and `results/figures/`
 
+## Development Notes
+
+**Always update `planning/notes.md`** when making changes to the project. This is a running commentary tracking:
+- Problems encountered and how they were solved
+- Script changes and why they were needed
+- Data collection milestones (what completed, key stats)
+- Decisions and their rationale
+
+Read `planning/notes.md` at the start of each session to pick up context.
+
 ## Important Notes
 
 - **No test suite yet** — validation is done through notebooks. Tests would be a good addition.
