@@ -11,42 +11,80 @@ import pandas as pd
 import plotly.express as px
 
 PROCESSED_DIR = Path("data/processed")
+SAMPLE_DIR = Path("data/sample")
 RESULTS_DIR = Path("results")
 
 
+def _resolve(primary: Path, fallback: Path) -> Path | None:
+    """Return primary path if it exists, else fallback, else None."""
+    if primary.exists():
+        return primary
+    if fallback.exists():
+        return fallback
+    return None
+
+
+def _read_json(path: Path | None, default=None):
+    """Read a JSON file, returning *default* if path is None."""
+    if path is None:
+        return default if default is not None else {}
+    with open(path) as f:
+        return json.load(f)
+
+
 def load_data() -> dict:
-    """Load processed data for the dashboard."""
+    """Load data for the dashboard.
+
+    Prefers full results from data/processed/ and results/tables/.
+    Falls back to data/sample/ when full data is unavailable (e.g. on
+    Streamlit Community Cloud where only committed files exist).
+    """
     data = {}
 
-    games_path = PROCESSED_DIR / "games.json"
-    data["games"] = pd.read_json(games_path, lines=True) if games_path.exists() else pd.DataFrame()
+    # Games
+    games_path = _resolve(
+        PROCESSED_DIR / "games.json",
+        SAMPLE_DIR / "games_sample.json",
+    )
+    data["games"] = pd.read_json(games_path, lines=True) if games_path else pd.DataFrame()
 
-    niche_path = RESULTS_DIR / "tables" / "top_niches.csv"
-    data["niches"] = pd.read_csv(niche_path) if niche_path.exists() else pd.DataFrame()
+    # Niches
+    niche_path = _resolve(
+        RESULTS_DIR / "tables" / "top_niches.csv",
+        SAMPLE_DIR / "top_niches.csv",
+    )
+    data["niches"] = pd.read_csv(niche_path) if niche_path else pd.DataFrame()
 
     all_niches_path = RESULTS_DIR / "tables" / "all_niches_scored.csv"
     data["all_niches"] = pd.read_csv(all_niches_path) if all_niches_path.exists() else pd.DataFrame()
 
-    report_path = PROCESSED_DIR / "data_quality_report.json"
-    data["quality"] = {}
-    if report_path.exists():
-        with open(report_path) as f:
-            data["quality"] = json.load(f)
+    # Quality report
+    report_path = _resolve(
+        PROCESSED_DIR / "data_quality_report.json",
+        SAMPLE_DIR / "data_quality_report.json",
+    )
+    data["quality"] = _read_json(report_path, {})
 
-    rec_path = RESULTS_DIR / "tables" / "recommender_results.json"
-    data["recommender"] = {}
-    if rec_path.exists():
-        with open(rec_path) as f:
-            data["recommender"] = json.load(f)
+    # Recommender results
+    rec_path = _resolve(
+        RESULTS_DIR / "tables" / "recommender_results.json",
+        SAMPLE_DIR / "recommender_results.json",
+    )
+    data["recommender"] = _read_json(rec_path, {})
 
-    revenue_path = RESULTS_DIR / "tables" / "revenue_estimates.json"
-    data["revenues"] = []
-    if revenue_path.exists():
-        with open(revenue_path) as f:
-            data["revenues"] = json.load(f)
+    # Revenue estimates
+    revenue_path = _resolve(
+        RESULTS_DIR / "tables" / "revenue_estimates.json",
+        SAMPLE_DIR / "revenue_estimates.json",
+    )
+    data["revenues"] = _read_json(revenue_path, [])
 
-    segments_path = RESULTS_DIR / "tables" / "price_segments.csv"
-    data["price_segments"] = pd.read_csv(segments_path) if segments_path.exists() else pd.DataFrame()
+    # Price segments
+    segments_path = _resolve(
+        RESULTS_DIR / "tables" / "price_segments.csv",
+        SAMPLE_DIR / "price_segments.csv",
+    )
+    data["price_segments"] = pd.read_csv(segments_path) if segments_path else pd.DataFrame()
 
     return data
 
