@@ -1,0 +1,303 @@
+{
+  "Action": {
+    "genre": "Action",
+    "optimal_price_bin": "$30+",
+    "best_median_revenue": 4499250.0,
+    "game_count_in_bin": 573,
+    "all_bins": [
+      {
+        "price_bin": "Free",
+        "median_revenue": 0.0,
+        "game_count": 2957
+      },
+      {
+        "price_bin": "$0-5",
+        "median_revenue": 49900.0,
+        "game_count": 5600
+      },
+      {
+        "price_bin": "$5-10",
+        "median_revenue": 99900.0,
+        "game_count": 4113
+      },
+      {
+        "price_bin": "$10-15",
+        "median_revenue": 149900.0,
+        "game_count": 2288
+      },
+      {
+        "price_bin": "$15-20",
+        "median_revenue": 699650.0,
+        "game_count": 1930
+      },
+      {
+        "price_bin": "$20-30",
+        "median_revenue": 1311950.0,
+        "game_count": 1002
+      },
+      {
+        "price_bin": "$30+",
+        "median_revenue": 4499250.0,
+        "game_count": 573
+      }
+    ]
+  },
+  "Indie": {
+    "genre": "Indie",
+    "optimal_price_bin": "$30+",
+    "best_median_revenue": 2999250.0,
+    "game_count_in_bin": 196,
+    "all_bins": [
+      {
+        "price_bin": "Free",
+        "median_revenue": 0.0,
+        "game_count": 3955
+      },
+      {
+        "price_bin": "$0-5",
+        "median_revenue": 49900.0,
+        "game_count": 10301
+      },
+      {
+        "price_bin": "$5-10",
+        "median_revenue": 99900.0,
+        "game_count": 7139
+      },
+      {
+        "price_bin": "$10-15",
+        "median_revenue": 149900.0,
+        "game_count": 4027
+      },
+      {
+        "price_bin": "$15-20",
+        "median_revenue": 559650.0,
+        "game_count": 2772
+      },
+      {
+        "price_bin": "$20-30",
+        "median_revenue": 1049650.0,
+        "game_count": 1171
+      },
+      {
+        "price_bin": "$30+",
+        "median_revenue": 2999250.0,
+        "game_count": 196
+      }
+    ]
+  },
+  "RPG": {
+    "genre": "RPG",
+    "optimal_price_bin": "$30+",
+    "best_median_revenue": 3580500.0,
+    "game_count_in_bin": 378,
+    "all_bins": [
+      {
+        "price_bin": "Free",
+        "median_revenue": 0.0,
+        "game_count": 1569
+      },
+      {
+        "price_bin": "$0-5",
+        "median_revenue": 49900.0,
+        "game_count": 2041
+      },
+      {
+        "price_bin": "$5-10",
+        "median_revenue": 99900.0,
+        "game_count": 2291
+      },
+      {
+        "price_bin": "$10-15",
+        "median_revenue": 149900.0,
+        "game_count": 1556
+      },
+      {
+        "price_bin": "$15-20",
+        "median_revenue": 664650.0,
+        "game_count": 1245
+      },
+      {
+        "price_bin": "$20-30",
+        "median_revenue": 1049650.0,
+        "game_count": 658
+      },
+      {
+        "price_bin": "$30+",
+        "median_revenue": 3580500.0,
+        "game_count": 378
+      }
+    ]
+  },
+  "Strategy": {
+    "genre": "Strategy",
+    "optimal_price_bin": "$30+",
+    "best_median_revenue": 2414450.0,
+    "game_count_in_bin": 310,
+    "all_bins": [
+      {
+        "price_bin": "Free",
+        "median_revenue": 0.0,
+        "game_count": 1479
+      },
+      {
+        "price_bin": "$0-5",
+        "median_revenue": 49900.0,
+        "game_count": 2270
+      },
+      {
+        "price_bin": "$5-10",
+        "median_revenue": 99900.0,
+        "game_count": 2333
+      },
+      {
+        "price_bin": "$10-15",
+        "median_revenue": 149900.0,
+        "game_count": 1392
+      },
+      {
+        "price_bin": "$15-20",
+        "median_revenue": 699650.0,
+        "game_count": 1082
+      },
+      {
+        "price_bin": "$20-30",
+        "median_revenue": 1874249.9999999998,
+        "game_count": 630
+      },
+      {
+        "price_bin": "$30+",
+        "median_revenue": 2414450.0,
+        "game_count": 310
+      }
+    ]
+  },
+  "Simulation": {
+    "genre": "Simulation",
+    "optimal_price_bin": "$30+",
+    "best_median_revenue": 1749650.0,
+    "game_count_in_bin": 355,
+    "all_bins": [
+      {
+        "price_bin": "Free",
+        "median_revenue": 0.0,
+        "game_count": 1394
+      },
+      {
+        "price_bin": "$0-5",
+        "median_revenue": 49900.0,
+        "game_count": 2604
+      },
+      {
+        "price_bin": "$5-10",
+        "median_revenue": 99900.0,
+        "game_count": 2584
+      },
+      {
+        "price_bin": "$10-15",
+        "median_revenue": 149900.0,
+        "game_count": 1578
+      },
+      {
+        "price_bin": "$15-20",
+        "median_revenue": 199900.0,
+        "game_count": 1412
+      },
+      {
+        "price_bin": "$20-30",
+        "median_revenue": 1049650.0,
+        "game_count": 775
+      },
+      {
+        "price_bin": "$30+",
+        "median_revenue": 1749650.0,
+        "game_count": 355
+      }
+    ]
+  },
+  "Adventure": {
+    "genre": "Adventure",
+    "optimal_price_bin": "$30+",
+    "best_median_revenue": 1399650.0,
+    "game_count_in_bin": 524,
+    "all_bins": [
+      {
+        "price_bin": "Free",
+        "median_revenue": 0.0,
+        "game_count": 2299
+      },
+      {
+        "price_bin": "$0-5",
+        "median_revenue": 49900.0,
+        "game_count": 5041
+      },
+      {
+        "price_bin": "$5-10",
+        "median_revenue": 99900.0,
+        "game_count": 4458
+      },
+      {
+        "price_bin": "$10-15",
+        "median_revenue": 149900.0,
+        "game_count": 2651
+      },
+      {
+        "price_bin": "$15-20",
+        "median_revenue": 199900.0,
+        "game_count": 2658
+      },
+      {
+        "price_bin": "$20-30",
+        "median_revenue": 874650.0,
+        "game_count": 1106
+      },
+      {
+        "price_bin": "$30+",
+        "median_revenue": 1399650.0,
+        "game_count": 524
+      }
+    ]
+  },
+  "Casual": {
+    "genre": "Casual",
+    "optimal_price_bin": "$30+",
+    "best_median_revenue": 499900.0,
+    "game_count_in_bin": 143,
+    "all_bins": [
+      {
+        "price_bin": "Free",
+        "median_revenue": 0.0,
+        "game_count": 2002
+      },
+      {
+        "price_bin": "$0-5",
+        "median_revenue": 49900.0,
+        "game_count": 6424
+      },
+      {
+        "price_bin": "$5-10",
+        "median_revenue": 99900.0,
+        "game_count": 3968
+      },
+      {
+        "price_bin": "$10-15",
+        "median_revenue": 149900.0,
+        "game_count": 2020
+      },
+      {
+        "price_bin": "$15-20",
+        "median_revenue": 199900.0,
+        "game_count": 1491
+      },
+      {
+        "price_bin": "$20-30",
+        "median_revenue": 299900.0,
+        "game_count": 436
+      },
+      {
+        "price_bin": "$30+",
+        "median_revenue": 499900.0,
+        "game_count": 143
+      }
+    ]
+  }
+}

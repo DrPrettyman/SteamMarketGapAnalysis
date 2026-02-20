@@ -1,0 +1,51 @@
+{
+  "r_squared": 0.1799,
+  "coefficients": {
+    "price_dollars": 0.007351,
+    "review_score": 0.748809,
+    "platform_count": 0.514089,
+    "genre_encoded": 0.001181
+  },
+  "intercept": 9.0613,
+  "n_observations": 40598,
+  "genre_classes": [
+    "Accounting",
+    "Action",
+    "Action Games",
+    "Adventure",
+    "Animation & Modeling",
+    "Audio Production",
+    "Casual",
+    "Design & Illustration",
+    "Documentary",
+    "Early Access",
+    "Education",
+    "Episodic",
+    "Free To Play",
+    "Free to Play",
+    "Game Development",
+    "Gore",
+    "Indie",
+    "Massively Multiplayer",
+    "Nudity",
+    "Photo Editing",
+    "RPG",
+    "Racing",
+    "Sexual Content",
+    "Shooter",
+    "Simulation",
+    "Software Training",
+    "Sports",
+    "Strategy",
+    "Tutorial",
+    "Unknown",
+    "Utilities",
+    "Video Production",
+    "Violent",
+    "Web Publishing"
+  ],
+  "interpretation": {
+    "price_effect": "Each additional $1 in price is associated with a 0.74% change in estimated ownership",
+    "caveat": "This is an observational association, not a causal estimate. Higher-quality games tend to be priced higher, creating endogeneity."
+  }
+}
